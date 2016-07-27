@@ -287,6 +287,32 @@ public class TTTGamePlay extends JFrame {
                     else if((board[2][0]==Seed.CROSS || board[2][1]==Seed.CROSS) && board[2][2]==Seed.EMPTY)
                     {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
 
+                    if(board[1][1]==Seed.CROSS)
+                    {
+                        if(board[2][2]==Seed.EMPTY)
+                        {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+                        else if(board[0][2]==Seed.EMPTY)
+                        {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
+                        else if(board[2][0]==Seed.EMPTY)
+                        {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+                    }
+                    else
+                    {
+                        if(board[2][1]==Seed.EMPTY)
+                        {board[2][1]=Seed.NOUGHT;rowSelected=2;colSelected=1;return;}
+                        else if(board[0][1]==Seed.EMPTY)
+                        {board[0][1]=Seed.NOUGHT;rowSelected=0;colSelected=1;return;}
+                        else if(board[1][0]==Seed.EMPTY)
+                        {board[1][0]=Seed.NOUGHT;rowSelected=1;colSelected=0;return;}
+                        else if(board[1][2]==Seed.EMPTY)
+                        {board[1][2]=Seed.NOUGHT;rowSelected=1;colSelected=2;return;}
+                    }
+
+                    for(a=0;a<3;a++)
+                        for(b=0;b<3;b++)
+                            if(board[a][b]==Seed.EMPTY)
+                            {board[a][b]=Seed.NOUGHT;rowSelected=a;colSelected=b;return;}
+
     }
 
     class DrawCanvas extends JPanel {
