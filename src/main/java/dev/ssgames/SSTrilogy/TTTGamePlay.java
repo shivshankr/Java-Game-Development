@@ -200,7 +200,25 @@ public class TTTGamePlay extends JFrame {
                 {board[1][a]=Seed.NOUGHT;rowSelected=1;colSelected=a;return;}
                 else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
                 {board[0][a]=Seed.NOUGHT;rowSelected=0;colSelected=a;return;}
-            }    
+            }
+
+            for(a=0;a<3;a++)
+                t[a]=board[a][a];
+            if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
+            {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+            else if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
+            {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+            else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
+            {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
+
+            t[0]=board[0][2];
+            t[2]=board[2][0];
+            if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
+            {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+            else if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
+            {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+            else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
+            {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}    
 
     }
 
