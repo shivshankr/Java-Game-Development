@@ -5,15 +5,15 @@ import java.awt.event.*;
 import java.util.Arrays;
 import javax.swing.*;
 
-
+@SuppressWarnings("serial")
 public class TTTGamePlay extends JFrame {
 
-    public static final int ROWS = 2;
-    public static final int COLS = 2;
+    public static final int ROWS = 3;
+    public static final int COLS = 3;
 
 
 
-    public static final int CELL_SIZE = 100;
+    public static final int CELL_SIZE = 190;
     public static final int CANVAS_WIDTH = CELL_SIZE * COLS;
     public static final int CANVAS_HEIGHT = CELL_SIZE * ROWS;
     public static final int GRID_WIDTH = 8;
@@ -40,8 +40,6 @@ public class TTTGamePlay extends JFrame {
     private Seed[][] board   ;
     private DrawCanvas canvas;
     private JLabel statusBar;
-    private int vertical;
-    private int horizontal;
     private boolean setWin=false;
     private int winX1;
     private int winY1;
@@ -62,13 +60,18 @@ public class TTTGamePlay extends JFrame {
         canvas = new DrawCanvas();
         canvas.setPreferredSize(new Dimension(900, 600));
 
+        computerPlay=player;
 
         PlayerXCount = new JLabel("Player X: " + String.valueOf(playerXscore));
+        PlayerXCount.setFont(new Font("Papyrus", Font.BOLD, 35));
         PlayerXCount.setBounds(620,120,260,100);
+        PlayerXCount.setForeground(Color.red);
         add(PlayerXCount);
 
         PlayerOCount = new JLabel("Player O: " + String.valueOf(playerOscore));
+        PlayerOCount.setFont(new Font("Papyrus", Font.BOLD, 35));
         PlayerOCount.setBounds(620,200,260,100);
+        PlayerOCount.setForeground(Color.blue);
         add(PlayerOCount);
 
         canvas.addMouseListener(new MouseAdapter() {
@@ -244,136 +247,141 @@ public class TTTGamePlay extends JFrame {
             else if(Arrays.deepEquals(board[a],new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
             {board[a][0]=Seed.NOUGHT;rowSelected=a;colSelected=0;return;}
 
-            for(a=0;a<3;a++)
-            {
-                for(b=0;b<3;b++)
-                    t[b]=board[b][a];
+        for(a=0;a<3;a++)
+        {
+            for(b=0;b<3;b++)
+                t[b]=board[b][a];
 
-                if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
-                {board[2][a]=Seed.NOUGHT;rowSelected=2;colSelected=a;return;}
-                else if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
-                {board[1][a]=Seed.NOUGHT;rowSelected=1;colSelected=a;return;}
-                else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
-                {board[0][a]=Seed.NOUGHT;rowSelected=0;colSelected=a;return;}
-            }
-
-            for(a=0;a<3;a++)
-                t[a]=board[a][a];
             if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
-            {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+            {board[2][a]=Seed.NOUGHT;rowSelected=2;colSelected=a;return;}
             else if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
-            {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+            {board[1][a]=Seed.NOUGHT;rowSelected=1;colSelected=a;return;}
             else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
+            {board[0][a]=Seed.NOUGHT;rowSelected=0;colSelected=a;return;}
+        }
+
+        for(a=0;a<3;a++)
+            t[a]=board[a][a];
+        if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
+        {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
+        {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
+        {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
+
+        t[0]=board[0][2];
+        t[2]=board[2][0];
+        if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
+        {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
+        {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
+        {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
+
+
+
+        for(a=0;a<3;a++)
+            if(Arrays.deepEquals(board[a],new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
+            {board[a][2]=Seed.NOUGHT;rowSelected=a;colSelected=2;return;}
+            else if(Arrays.deepEquals(board[a],new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
+            {board[a][1]=Seed.NOUGHT;rowSelected=a;colSelected=1;return;}
+            else if(Arrays.deepEquals(board[a],new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
+            {board[a][0]=Seed.NOUGHT;rowSelected=a;colSelected=0;return;}
+
+        for(a=0;a<3;a++)
+        {
+            for(b=0;b<3;b++)
+                t[b]=board[b][a];
+
+            if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
+            {board[2][a]=Seed.NOUGHT;rowSelected=2;colSelected=a;return;}
+            else if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
+            {board[1][a]=Seed.NOUGHT;rowSelected=1;colSelected=a;return;}
+            else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
+            {board[0][a]=Seed.NOUGHT;rowSelected=0;colSelected=a;return;}
+        }
+
+        for(a=0;a<3;a++)
+            t[a]=board[a][a];
+        if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
+        {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
+        {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
+        {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
+
+        t[0]=board[0][2];
+        t[2]=board[2][0];
+        if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
+        {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
+        {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+        else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
+        {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
+
+        if(board[1][1]==Seed.EMPTY)
+        {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+
+        if(board[0][1]==Seed.CROSS)
+            if((board[1][0]==Seed.CROSS || board[2][0]==Seed.CROSS) && board[0][0]==Seed.EMPTY)
             {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
-
-            t[0]=board[0][2];
-            t[2]=board[2][0];
-            if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
-            {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
-            else if(Arrays.deepEquals(t,new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
-            {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
-            else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
+            else if((board[1][2]==Seed.CROSS || board[2][2]==Seed.CROSS) && board[0][2]==Seed.EMPTY)
             {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
 
-            for(a=0;a<3;a++)
-                if(Arrays.deepEquals(board[a],new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
-                {board[a][2]=Seed.NOUGHT;rowSelected=a;colSelected=2;return;}
-                else if(Arrays.deepEquals(board[a],new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
-                {board[a][1]=Seed.NOUGHT;rowSelected=a;colSelected=1;return;}
-                else if(Arrays.deepEquals(board[a],new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
-                {board[a][0]=Seed.NOUGHT;rowSelected=a;colSelected=0;return;}
+        if(board[1][0]==Seed.CROSS)
+            if((board[0][1]==Seed.CROSS || board[0][2]==Seed.CROSS) && board[0][0]==Seed.EMPTY)
+            {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
+            else if((board[2][1]==Seed.CROSS || board[2][2]==Seed.CROSS) && board[2][0]==Seed.EMPTY)
+            {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
 
-            for(a=0;a<3;a++)
-                {
-                    for(b=0;b<3;b++)
-                        t[b]=board[b][a];
-
-                    if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
-                    {board[2][a]=Seed.NOUGHT;rowSelected=2;colSelected=a;return;}
-                    else if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
-                    {board[1][a]=Seed.NOUGHT;rowSelected=1;colSelected=a;return;}
-                    else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
-                    {board[0][a]=Seed.NOUGHT;rowSelected=0;colSelected=a;return;}
-                }
-
-                for(a=0;a<3;a++)
-                    t[a]=board[a][a];
-                if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
-                {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
-                else if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
-                {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
-                else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
-                {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
-
-                t[0]=board[0][2];
-                t[2]=board[2][0];
-                if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
-                {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
-                else if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
-                {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
-                else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
-                {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
-
-                if(board[1][1]==Seed.EMPTY)
-                {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
-
-                if(board[0][1]==Seed.CROSS)
-                    if((board[1][0]==Seed.CROSS || board[2][0]==Seed.CROSS) && board[0][0]==Seed.EMPTY)
-                    {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
-                    else if((board[1][2]==Seed.CROSS || board[2][2]==Seed.CROSS) && board[0][2]==Seed.EMPTY)
-                    {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
-
-                if(board[1][0]==Seed.CROSS)
-                    if((board[0][1]==Seed.CROSS || board[0][2]==Seed.CROSS) && board[0][0]==Seed.EMPTY)
-                    {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
-                    else if((board[2][1]==Seed.CROSS || board[2][2]==Seed.CROSS) && board[2][0]==Seed.EMPTY)
-                    {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
-
-                if(board[2][1]==Seed.CROSS)
-                    if((board[0][0]==Seed.CROSS || board[1][0]==Seed.CROSS) && board[2][0]==Seed.EMPTY)
-                    {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
-                    else if((board[0][2]==Seed.CROSS || board[1][2]==Seed.CROSS) && board[2][2]==Seed.EMPTY)
-                    {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+        if(board[2][1]==Seed.CROSS)
+            if((board[0][0]==Seed.CROSS || board[1][0]==Seed.CROSS) && board[2][0]==Seed.EMPTY)
+            {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+            else if((board[0][2]==Seed.CROSS || board[1][2]==Seed.CROSS) && board[2][2]==Seed.EMPTY)
+            {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
 
 
-                if(board[1][2]==Seed.CROSS)
-                    if((board[0][0]==Seed.CROSS || board[0][1]==Seed.CROSS) && board[0][2]==Seed.EMPTY)
-                    {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
-                    else if((board[2][0]==Seed.CROSS || board[2][1]==Seed.CROSS) && board[2][2]==Seed.EMPTY)
-                    {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+        if(board[1][2]==Seed.CROSS)
+            if((board[0][0]==Seed.CROSS || board[0][1]==Seed.CROSS) && board[0][2]==Seed.EMPTY)
+            {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
+            else if((board[2][0]==Seed.CROSS || board[2][1]==Seed.CROSS) && board[2][2]==Seed.EMPTY)
+            {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
 
-                    if(board[1][1]==Seed.CROSS)
-                    {
-                        if(board[2][2]==Seed.EMPTY)
-                        {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
-                        else if(board[0][2]==Seed.EMPTY)
-                        {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
-                        else if(board[2][0]==Seed.EMPTY)
-                        {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
-                    }
-                    else
-                    {
-                        if(board[2][1]==Seed.EMPTY)
-                        {board[2][1]=Seed.NOUGHT;rowSelected=2;colSelected=1;return;}
-                        else if(board[0][1]==Seed.EMPTY)
-                        {board[0][1]=Seed.NOUGHT;rowSelected=0;colSelected=1;return;}
-                        else if(board[1][0]==Seed.EMPTY)
-                        {board[1][0]=Seed.NOUGHT;rowSelected=1;colSelected=0;return;}
-                        else if(board[1][2]==Seed.EMPTY)
-                        {board[1][2]=Seed.NOUGHT;rowSelected=1;colSelected=2;return;}
-                    }
+        if(board[1][1]==Seed.CROSS)
+        {
+            if(board[2][2]==Seed.EMPTY)
+            {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+            else if(board[0][2]==Seed.EMPTY)
+            {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
+            else if(board[2][0]==Seed.EMPTY)
+            {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+        }
+        else
+        {
+            if(board[2][1]==Seed.EMPTY)
+            {board[2][1]=Seed.NOUGHT;rowSelected=2;colSelected=1;return;}
+            else if(board[0][1]==Seed.EMPTY)
+            {board[0][1]=Seed.NOUGHT;rowSelected=0;colSelected=1;return;}
+            else if(board[1][0]==Seed.EMPTY)
+            {board[1][0]=Seed.NOUGHT;rowSelected=1;colSelected=0;return;}
+            else if(board[1][2]==Seed.EMPTY)
+            {board[1][2]=Seed.NOUGHT;rowSelected=1;colSelected=2;return;}
+        }
 
-                    for(a=0;a<3;a++)
-                        for(b=0;b<3;b++)
-                            if(board[a][b]==Seed.EMPTY)
-                            {board[a][b]=Seed.NOUGHT;rowSelected=a;colSelected=b;return;}
+        for(a=0;a<3;a++)
+            for(b=0;b<3;b++)
+                if(board[a][b]==Seed.EMPTY)
+                {board[a][b]=Seed.NOUGHT;rowSelected=a;colSelected=b;return;}
 
     }
+
+
 
     class DrawCanvas extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
+            setBackground(Color.yellow);
 
 
             g.setColor(Color.LIGHT_GRAY);
@@ -414,7 +422,6 @@ public class TTTGamePlay extends JFrame {
                         g2d.drawLine(wx2, wy1, wx1, wy2);
 
                     }
-
                 }
             }
 
