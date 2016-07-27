@@ -405,6 +405,15 @@ public class TTTGamePlay extends JFrame {
                         g2d.setColor(Color.BLUE);
                         g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
                     }
+                    if(setWin){
+                        g2d.setColor(Color.BLACK);
+                        int wx1 = new Double(winX1 * CELL_SIZE + 0.5*CELL_SIZE*vertical).intValue();
+                        int wy1 = new Double(winY1 * CELL_SIZE + 0.5*CELL_SIZE*horizontal).intValue();
+                        int wx2 = new Double(winX2 * CELL_SIZE + 0.5*CELL_SIZE + 0.5*CELL_SIZE*horizontal).intValue();
+                        int wy2 = new Double(winY2 * CELL_SIZE + 0.5*CELL_SIZE + 0.5*CELL_SIZE*vertical).intValue();
+                        g2d.drawLine(wx2, wy1, wx1, wy2);
+
+                    }
 
                 }
             }
