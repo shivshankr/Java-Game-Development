@@ -176,6 +176,53 @@ public class TTTGamePlay extends JFrame {
     }
 
 
+    public boolean hasWon(Seed theSeed, int rowSelected, int colSelected) {
+
+        if(board[rowSelected][0] == theSeed
+                && board[rowSelected][1] == theSeed
+                && board[rowSelected][2] == theSeed){
+
+            setWin=true;
+            winX1=0;
+            winY1=rowSelected;
+            winX2=2;
+            winY2=rowSelected;
+            vertical=0;
+            horizontal=1;
+
+            return true;
+        }
+        else if( board[0][colSelected] == theSeed
+                && board[1][colSelected] == theSeed
+                && board[2][colSelected] == theSeed){
+
+            setWin=true;
+            winX1=colSelected;
+            winY1=0;
+            winX2=colSelected;
+            winY2=2;
+            vertical=1;
+            horizontal=0;
+
+            return true;
+        }
+        else if(rowSelected == colSelected
+                && board[0][0] == theSeed
+                && board[1][1] == theSeed
+                && board[2][2] == theSeed){
+
+            return true;
+        }
+        else if(rowSelected + colSelected == 2
+                && board[0][2] == theSeed
+                && board[1][1] == theSeed
+                && board[2][0] == theSeed){
+
+            return true;
+        }
+        return (false);
+    }
+    
     void computerPlay()
     {
         Seed t[]=new Seed[3];
