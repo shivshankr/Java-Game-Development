@@ -226,7 +226,20 @@ public class TTTGamePlay extends JFrame {
                 else if(Arrays.deepEquals(board[a],new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
                 {board[a][1]=Seed.NOUGHT;rowSelected=a;colSelected=1;return;}
                 else if(Arrays.deepEquals(board[a],new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
-                {board[a][0]=Seed.NOUGHT;rowSelected=a;colSelected=0;return;}    
+                {board[a][0]=Seed.NOUGHT;rowSelected=a;colSelected=0;return;}
+
+            for(a=0;a<3;a++)
+                {
+                    for(b=0;b<3;b++)
+                        t[b]=board[b][a];
+
+                    if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.CROSS,Seed.EMPTY}))
+                    {board[2][a]=Seed.NOUGHT;rowSelected=2;colSelected=a;return;}
+                    else if(Arrays.deepEquals(t,new Seed[]{Seed.CROSS,Seed.EMPTY,Seed.CROSS}))
+                    {board[1][a]=Seed.NOUGHT;rowSelected=1;colSelected=a;return;}
+                    else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
+                    {board[0][a]=Seed.NOUGHT;rowSelected=0;colSelected=a;return;}
+                }
 
     }
 
