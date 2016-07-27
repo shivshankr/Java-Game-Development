@@ -42,6 +42,14 @@ public class TTTGamePlay extends JFrame {
     private JLabel statusBar;
     private int vertical;
     private int horizontal;
+    private boolean setWin=false;
+    private int winX1;
+    private int winY1;
+    private int winX2;
+    private int winY2;
+    private int vertical;
+    private int horizontal;
+    boolean computerPlay=false;
     JLabel PlayerXCount;
     JLabel PlayerOCount;
     int rowSelected;
@@ -222,7 +230,7 @@ public class TTTGamePlay extends JFrame {
         }
         return (false);
     }
-    
+
     void computerPlay()
     {
         Seed t[]=new Seed[3];
