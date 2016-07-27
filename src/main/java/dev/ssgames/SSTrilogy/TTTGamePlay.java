@@ -262,6 +262,31 @@ public class TTTGamePlay extends JFrame {
                 if(board[1][1]==Seed.EMPTY)
                 {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
 
+                if(board[0][1]==Seed.CROSS)
+                    if((board[1][0]==Seed.CROSS || board[2][0]==Seed.CROSS) && board[0][0]==Seed.EMPTY)
+                    {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
+                    else if((board[1][2]==Seed.CROSS || board[2][2]==Seed.CROSS) && board[0][2]==Seed.EMPTY)
+                    {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
+
+                if(board[1][0]==Seed.CROSS)
+                    if((board[0][1]==Seed.CROSS || board[0][2]==Seed.CROSS) && board[0][0]==Seed.EMPTY)
+                    {board[0][0]=Seed.NOUGHT;rowSelected=0;colSelected=0;return;}
+                    else if((board[2][1]==Seed.CROSS || board[2][2]==Seed.CROSS) && board[2][0]==Seed.EMPTY)
+                    {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+
+                if(board[2][1]==Seed.CROSS)
+                    if((board[0][0]==Seed.CROSS || board[1][0]==Seed.CROSS) && board[2][0]==Seed.EMPTY)
+                    {board[2][0]=Seed.NOUGHT;rowSelected=2;colSelected=0;return;}
+                    else if((board[0][2]==Seed.CROSS || board[1][2]==Seed.CROSS) && board[2][2]==Seed.EMPTY)
+                    {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+
+
+                if(board[1][2]==Seed.CROSS)
+                    if((board[0][0]==Seed.CROSS || board[0][1]==Seed.CROSS) && board[0][2]==Seed.EMPTY)
+                    {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
+                    else if((board[2][0]==Seed.CROSS || board[2][1]==Seed.CROSS) && board[2][2]==Seed.EMPTY)
+                    {board[2][2]=Seed.NOUGHT;rowSelected=2;colSelected=2;return;}
+
     }
 
     class DrawCanvas extends JPanel {
