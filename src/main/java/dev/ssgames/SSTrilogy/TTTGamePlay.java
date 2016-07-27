@@ -60,7 +60,7 @@ public class TTTGamePlay extends JFrame {
 
     public TTTGamePlay(boolean player) {
         canvas = new DrawCanvas();
-        canvas.setPreferredSize(new Dimension(400, 200));
+        canvas.setPreferredSize(new Dimension(900, 600));
 
 
         PlayerXCount = new JLabel("Player X: " + String.valueOf(playerXscore));
