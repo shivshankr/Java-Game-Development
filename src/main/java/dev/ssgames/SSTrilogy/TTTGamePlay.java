@@ -176,7 +176,20 @@ public class TTTGamePlay extends JFrame {
     }
 
 
+    void computerPlay()
+    {
+        Seed t[]=new Seed[3];
+        int a,b;
 
+        for(a=0;a<3;a++)
+            if(Arrays.deepEquals(board[a],new Seed[]{Seed.NOUGHT,Seed.NOUGHT,Seed.EMPTY}))
+            {board[a][2]=Seed.NOUGHT;rowSelected=a;colSelected=2;return;}
+            else if(Arrays.deepEquals(board[a],new Seed[]{Seed.NOUGHT,Seed.EMPTY,Seed.NOUGHT}))
+            {board[a][1]=Seed.NOUGHT;rowSelected=a;colSelected=1;return;}
+            else if(Arrays.deepEquals(board[a],new Seed[]{Seed.EMPTY,Seed.NOUGHT,Seed.NOUGHT}))
+            {board[a][0]=Seed.NOUGHT;rowSelected=a;colSelected=0;return;}    
+
+    }
 
     class DrawCanvas extends JPanel {
         @Override
@@ -213,7 +226,7 @@ public class TTTGamePlay extends JFrame {
                         g2d.setColor(Color.BLUE);
                         g2d.drawOval(x1, y1, SYMBOL_SIZE, SYMBOL_SIZE);
                     }
-                  
+
                 }
             }
 
