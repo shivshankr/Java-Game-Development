@@ -259,6 +259,9 @@ public class TTTGamePlay extends JFrame {
                 else if(Arrays.deepEquals(t,new Seed[]{Seed.EMPTY,Seed.CROSS,Seed.CROSS}))
                 {board[0][2]=Seed.NOUGHT;rowSelected=0;colSelected=2;return;}
 
+                if(board[1][1]==Seed.EMPTY)
+                {board[1][1]=Seed.NOUGHT;rowSelected=1;colSelected=1;return;}
+
     }
 
     class DrawCanvas extends JPanel {
